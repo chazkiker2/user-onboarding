@@ -43,17 +43,6 @@ const App = () => {
 	const [isDisabled, setIsDisabled] = useState(true);
 
 	// *        HELPER FUNCTIONS                                         //
-	// const getUsers = () => {
-	// 	axios.get("https://reqres.in/api/users")
-	// 		.then(res => {
-	// 			setUsers(res.data.data);
-	// 			console.log(res.data.data);
-	// 		})
-	// 		.catch(err => {
-	// 			console.log(err);
-	// 		});
-	// };
-
 	const postNewUser = (newUser) => {
 		axios.post("https://reqres.in/api/users", newUser)
 			.then(res => {
@@ -93,10 +82,6 @@ const App = () => {
 	};
 
 	// *        SIDE EFFECTS          //
-	// useEffect(() => {
-	// 	getUsers();
-	// }, []);
-
 	useEffect(()=> {
 		formSchema.isValid(formValues).then(valid => {
 			setIsDisabled(!valid);
@@ -114,7 +99,6 @@ const App = () => {
 			<Form values={formValues} errors={formErrors} submit={formSubmit} change={formChange} disabled={isDisabled} />
 			{
 				users.map(user => {
-					// console.log(user);
 					return <User key={user.id} userInfo={user} />
 				})
 			}

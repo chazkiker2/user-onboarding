@@ -63,7 +63,7 @@ const Form = (props) => {
 					<option value="intern">Intern</option>
 				</select>
 			</label>
-
+			{/* // *              CHECKBOX                     */}
 			<label>Terms
 				<input name="terms"
 					type="checkbox"
