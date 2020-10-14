@@ -43,16 +43,16 @@ const App = () => {
 	const [isDisabled, setIsDisabled] = useState(true);
 
 	// *        HELPER FUNCTIONS                                         //
-	const getUsers = () => {
-		axios.get("https://reqres.in/api/users")
-			.then(res => {
-				setUsers(res.data.data);
-				console.log(res.data.data);
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
+	// const getUsers = () => {
+	// 	axios.get("https://reqres.in/api/users")
+	// 		.then(res => {
+	// 			setUsers(res.data.data);
+	// 			console.log(res.data.data);
+	// 		})
+	// 		.catch(err => {
+	// 			console.log(err);
+	// 		});
+	// };
 
 	const postNewUser = (newUser) => {
 		axios.post("https://reqres.in/api/users", newUser)
@@ -76,6 +76,21 @@ const App = () => {
 		postNewUser(newUser);
 	};
 
+	const formChange = (name, value) => {
+		Yup.reach(formSchema, name)
+			.validate(value)
+			.then( () => {
+				setFormErrors({ ...formErrors, [name]: "" });
+			})
+			.catch(err => {
+				setFormErrors({ ...formErrors, [name]: err.errors[0] });
+			});
+			setFormValues({
+				...formValues,
+				[name]: value //NOT AN ARRAY
+			});
+	};
+
 	// *        SIDE EFFECTS          //
 	// useEffect(() => {
 	// 	getUsers();
@@ -96,7 +111,7 @@ const App = () => {
 		<div className="App">
 			<img src={logo} className="App-logo" alt="logo" />
 			<h1>USER FORM</h1>
-			<Form values={formValues} errors={formErrors} submit={formSubmit} />
+			<Form values={formValues} errors={formErrors} submit={formSubmit} change={formChange} />
 			{
 				users.map(user => {
 					// console.log(user);
