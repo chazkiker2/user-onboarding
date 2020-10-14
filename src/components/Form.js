@@ -49,7 +49,7 @@ const Form = (props) => {
 			<label>Password
 				<input name="password"
 					type="password"
-					value={values.email}
+					value={values.password}
 					onChange={onChange}
 					/>
 			</label>

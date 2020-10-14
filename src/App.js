@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import axios from "axios";
@@ -26,11 +25,12 @@ const initialFormErrors = {
 }
 const initialUsers = [
 	{
-		avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/calebogden/128.jpg",
-		email: "george.bluth@reqres.in",
-		first_name: "George",
 		id: 1,
-		last_name: "Bluth",
+		name: "George Bluth",
+		password: "12345",
+		email: "george.bluth@reqres.in",
+		role: "admin",
+		terms: true,
 	}
 ];
 
@@ -68,26 +68,27 @@ const App = () => {
 	// *        EVENT HANDLERS                                     //
 	const formSubmit = () => {
 		const newUser = {
-			username: formValues.username.trim(),
+			name: formValues.name.trim(),
+			password: formValues.password,
 			email: formValues.email.trim(),
-			role: formValues.role.trim(),
-			terms: formValues.terms.trim(),
+			role: formValues.role,
+			terms: formValues.terms,
 		};
 		postNewUser(newUser);
 	};
 
-	const formChange = (name, value) => {
-		Yup.reach(formSchema, name)
+	const formChange = (key, value) => {
+		Yup.reach(formSchema, key)
 			.validate(value)
 			.then( () => {
-				setFormErrors({ ...formErrors, [name]: "" });
+				setFormErrors({ ...formErrors, [key]: "" });
 			})
 			.catch(err => {
-				setFormErrors({ ...formErrors, [name]: err.errors[0] });
+				setFormErrors({ ...formErrors, [key]: err.errors[0] });
 			});
 			setFormValues({
 				...formValues,
-				[name]: value //NOT AN ARRAY
+				[key]: value //NOT AN ARRAY
 			});
 	};
 
@@ -109,9 +110,8 @@ const App = () => {
 	// *                 RETURN & RENDER                         //
 	return (
 		<div className="App">
-			<img src={logo} className="App-logo" alt="logo" />
 			<h1>USER FORM</h1>
-			<Form values={formValues} errors={formErrors} submit={formSubmit} change={formChange} />
+			<Form values={formValues} errors={formErrors} submit={formSubmit} change={formChange} disabled={isDisabled} />
 			{
 				users.map(user => {
 					// console.log(user);
