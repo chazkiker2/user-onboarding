@@ -132,16 +132,13 @@ describe("User Onboarding Form App", () => {
 
 		it("with valid input, submit button creates a user on click", () => {
 			cy.contains(/Name: user/).should("not.exist");
-
 			nameInput().type("user");
 			emailInput().type("user@mail.com");
 			passwordInput().type("65432");
 			roleInput().select("admin");
 			termsCheckbox().check();
 			submitBtn().click();
-
 			cy.contains(/Name: user/).should("exist");
-
 		})
 	})
 
