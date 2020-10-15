@@ -2,7 +2,7 @@ import React from "react";
 
 const Form = (props) => {
 
-	const { values, errors, submit, change } = props;
+	const { values, errors, submit, change, disabled } = props;
 
 	const onSubmit = evt => {
 		evt.preventDefault();
@@ -18,7 +18,7 @@ const Form = (props) => {
 	<form className="form container" onSubmit={onSubmit}>
 		<div className="form-group submit">
 			<h2>Add User</h2>
-			<button>SUBMIT</button>
+			<button id="submitBtn" disabled={disabled}>SUBMIT</button>
 
 			<div className="errors">
 				<div>{errors.name}</div>
@@ -69,6 +69,7 @@ const Form = (props) => {
 					type="checkbox"
 					value="agree"
 					onChange={onChange}
+					className={values.terms ? "checked" : "unchecked"}
 				/>
 			</label>
 		</div>
